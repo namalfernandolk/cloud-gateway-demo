@@ -1,0 +1,28 @@
+server:
+  port: 7777
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8083/eureka
+spring:
+  application:
+    name: cloud-gateway-demo
+  cloud:
+    gateway:
+      routes:
+      - id: mtokens-exchange-service
+        uri: lb://mtokens-exchange-service
+        predicates:
+        - Path=/token-management/**, /transparent-gateway/**, /transaction-log-management/**, /customer-management/**
+        filters:
+          - name: AuthFilter
+            args:
+              allowedRoles: ROLE_ADMIN
+      - id: mtokens-authentication-service
+        uri: lb://mtokens-authentication-service
+        predicates:
+          - Path=/auth/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
