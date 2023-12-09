@@ -41,11 +41,12 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
             return this.webClient
                     .get()
-                    .uri("http://mtokens-authentication-service/auth/validate?token=" + authHeader + "&role=" + expectedRole)
+                    .uri("http://authentication-service/auth/validate?token=" + authHeader + "&role=" + expectedRole)
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .flatMap(response -> {
-                        exchange.getResponse().getHeaders().add("Custom-Header", "Custom-Value");
+                        if(Boolean.FALSE.equals(response))
+                            throw new RuntimeException("un authorized access to application");
                         return chain.filter(exchange);
                     })
                     .onErrorResume(throwable -> {

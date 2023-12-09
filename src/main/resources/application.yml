@@ -10,16 +10,24 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: mtokens-exchange-service
-        uri: lb://mtokens-exchange-service
+      - id: alpha-service
+        uri: lb://alpha-service
         predicates:
-        - Path=/token-management/**, /transparent-gateway/**, /transaction-log-management/**, /customer-management/**
+        - Path=/service1/**, /service2/**, /service3/**, /service4/**
         filters:
           - name: AuthFilter
             args:
               allowedRoles: ROLE_ADMIN
-      - id: mtokens-authentication-service
-        uri: lb://mtokens-authentication-service
+      - id: alpha-service
+        uri: lb://alpha-service
+        predicates:
+          - Path=/service2/**, /service3/**
+        filters:
+          - name: AuthFilter
+            args:
+              allowedRoles: ROLE_USER
+      - id: authentication-service
+        uri: lb://authentication-service
         predicates:
           - Path=/auth/**
 logging:
