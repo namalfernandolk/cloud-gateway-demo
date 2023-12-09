@@ -1,4 +1,4 @@
-package com.ironwood.spring.cloudgatewaydemo.config;
+package com.namalfernandolk.spring.cloudgatewaydemo.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

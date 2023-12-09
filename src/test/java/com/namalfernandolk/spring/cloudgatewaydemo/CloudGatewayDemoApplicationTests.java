@@ -1,4 +1,4 @@
-package com.ironwood.spring.cloudgatewaydemo;
+package com.namalfernandolk.spring.cloudgatewaydemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
